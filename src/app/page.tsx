@@ -1,101 +1,211 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import styles from './page.module.css';
+import HyperText from '@/components/magicui/hyper-text';
+
+const LandingPage = () => {
+  const [headerVisible, setHeaderVisible] = useState({
+    intro: false,
+    upgrade: false,
+    features: false,
+  });
+  const [contentVisible, setContentVisible] = useState({
+    upgrade: false,
+    features: false,
+  });
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="container mx-auto px-4">
+      <motion.header 
+        className="text-center py-12"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.5 }}
+        onAnimationComplete={() => setHeaderVisible(prev => ({ ...prev, intro: true }))}
+      >
+        <motion.h1 
+          className="text-4xl font-bold mb-2 text-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 1 }}
+        >
+          <a href="#intro" className="block h-[1.5em]">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 1.5 }}
+              className="flex justify-center"
+            >
+              {headerVisible.intro ? <HyperText text="Introducing dan3" className="inline-block" animateOnLoad={false} /> : <span className="invisible">Introducing dan3</span>}
+            </motion.div>
+          </a>
+        </motion.h1>
+        <motion.p 
+          className="text-xl text-gray-600"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: headerVisible.intro ? 1 : 0 }}
+          transition={{ duration: 0.5, delay: 1.2 }}
+        >
+          The evolution of dan 2.0 - Now even better!
+        </motion.p>
+      </motion.header>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      <main>
+        <motion.section 
+          className="text-center py-16 bg-gray-100 rounded-lg bg-dot-pattern"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 3.0 }}
+          onAnimationComplete={() => {
+            setHeaderVisible(prev => ({ ...prev, upgrade: true }));
+          }}
+        >
+          <motion.h2 
+            className="text-3xl font-semibold mb-4 text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 3.5 }}
+            onAnimationComplete={() => setContentVisible(prev => ({ ...prev, upgrade: true }))}
           >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <a href="#upgrade" className="block h-[1.2em]">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 2.5 }}
+                className="flex justify-center"
+              >
+                {headerVisible.upgrade ? <HyperText text="Upgrade to dan3" className="inline-block" animateOnLoad={false} /> : <span className="invisible">Upgrade to dan3</span>}
+              </motion.div>
+            </a>
+          </motion.h2>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: contentVisible.upgrade ? 1 : 0, y: contentVisible.upgrade ? 0 : 20 }}
+            transition={{ duration: 0.5, delay: 0.0 }}
           >
-            Read our docs
-          </a>
-        </div>
+            <p className="text-lg mb-6">Experience the next level of responsive, flexible, and dynamic technology</p>
+            <motion.button 
+              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Get Started
+            </motion.button>
+          </motion.div>
+        </motion.section>
+
+        <motion.section 
+          className="py-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 1.0 }}
+          onAnimationComplete={() => {
+            setHeaderVisible(prev => ({ ...prev, features: true }));
+          }}
+        >
+          <motion.h2 
+            className="text-3xl font-semibold mb-8 text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 5 }}
+            onAnimationComplete={() => setContentVisible(prev => ({ ...prev, features: true }))}
+          >
+            <a href="#features" className="block h-[1.2em]">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 4.5 }}
+                className="flex justify-center"
+              >
+                {headerVisible.features ? <HyperText text="Key Features" className="inline-block" animateOnLoad={false} /> : <span className="invisible">Key Features</span>}
+              </motion.div>
+            </a>
+          </motion.h2>
+          <motion.ul
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+            initial="hidden"
+            animate={contentVisible.features ? "visible" : "hidden"}
+            variants={{
+              visible: {
+                transition: {
+                  delayChildren: 0.5,
+                  staggerChildren: 0.8,
+                },
+              },
+            }}
+          >
+            {[
+              {
+                title: "Secure",
+                icon: "🔒",
+              },
+              {
+                title: "Reliable",
+                icon: "✅",
+              },
+              {
+                title: "Doesn't follow the rule of 3s",
+                icon: "🚀",
+              },
+              {
+                title: "Decentralized (??)",
+                icon: "🌐",
+              },
+            ].map((feature, index) => (
+              <motion.li
+                key={index}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+              >
+                <FeatureCard
+                  title={feature.title}
+                  description={""}
+                  icon={feature.icon}
+                />
+              </motion.li>
+            ))}
+          </motion.ul>
+        </motion.section>
+
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
     </div>
   );
+};
+
+interface FeatureCardProps {
+  title: string;
+  description: string;
+  icon: string;
 }
+
+const FeatureCard = ({ title, description, icon }: FeatureCardProps) => {
+  return (
+    <motion.div 
+      className="bg-white p-6 rounded-lg shadow-md"
+      whileHover={{ scale: 1.05 }}
+      transition={{ type: "spring", stiffness: 200, damping: 10 }}
+    >
+      <span className="text-4xl mb-4 block text-center">{icon}</span>
+      <h3 className="text-xl font-semibold mb-2 text-center">
+        <a href={`#${title.toLowerCase()}`} className="block h-[1.2em]">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            className="flex justify-center"
+          >
+            {title}
+          </motion.div>
+        </a>
+      </h3>
+      <p className="text-gray-600 text-center">{description}</p>
+    </motion.div>
+  );
+};
+
+export default LandingPage;
