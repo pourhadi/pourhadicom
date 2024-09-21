@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import styles from './page.module.css';
 import HyperText from '@/components/magicui/hyper-text';
 
 const LandingPage = () => {
