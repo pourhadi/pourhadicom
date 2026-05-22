@@ -1,21 +1,28 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-inter",
+  display: "swap",
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+
+const jbm = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-jbm",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "dan3 - The Next Generation of Dan",
-  description: "The website of Daniel Pourhadi",
+  title: "dan-4 — a Daniel Pourhadi foundation model",
+  description:
+    "dan-4: a Daniel Pourhadi foundation model. Architecture, technical leadership, and AI agents built from the ground up.",
+  other: {
+    "color-scheme": "dark",
+  },
 };
 
 export default function RootLayout({
@@ -24,12 +31,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+    <html lang="en" className={`${inter.variable} ${jbm.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }
